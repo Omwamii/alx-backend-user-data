@@ -13,7 +13,7 @@ class Auth:
         """
         if path is None:
             return True
-        elif excluded_paths is None or excluded_paths == []: 
+        elif excluded_paths is None or excluded_paths == []:
             return True
         elif path in excluded_paths:
             return False
@@ -27,7 +27,6 @@ class Auth:
                     if path.startswith(i[:-1]):
                         return False
         return True
-
 
     def authorization_header(self, request=None) -> str:
         """ Check if header has authorization key
