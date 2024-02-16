@@ -40,5 +40,3 @@ def forbidden():
     THrow 403 error
     """
     abort(403)
-
-
