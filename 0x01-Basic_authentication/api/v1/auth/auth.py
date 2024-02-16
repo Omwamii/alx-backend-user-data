@@ -16,9 +16,14 @@ class Auth:
         # add tolerance for routes not ending with '/'
         if not path.endswith('/'):
             path += '/'
-        if path not in excluded_paths:
-            return True
-        return False
+        for ex_path in excluded_paths:
+            if ex_path.endswith("*"):
+                ex_l = len(ex_path.split("*")[0])
+                if path[:ex_l] == ex_path:
+                    return False
+            elif ex_path == path:
+                return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """ Check if header has authorization key
