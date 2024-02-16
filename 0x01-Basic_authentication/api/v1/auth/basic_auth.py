@@ -47,8 +47,8 @@ class BasicAuth(Auth):
             return (None, None)
         if ":" not in header:
             return (None, None)
-        data = header.split(":")
-        email, passwd = data[0], data[1]
+        email = header.split(":")[0]
+        passwd = header[len(email) + 1:]
         return (email, passwd)
 
     def user_object_from_credentials(self, user_email: str,
