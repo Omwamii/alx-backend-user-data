@@ -8,22 +8,26 @@ class Auth:
     """ Authentication API management app
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """ returns False """
+        """ returns False if authentication is not required for a path
+        else return true
+        """
         if path is None:
             return True
-        if excluded_paths is None or len(excluded_paths) == 0:
+        elif excluded_paths is None or excluded_paths == []: 
             return True
-        # add tolerance for routes not ending with '/'
-        if not path.endswith('/'):
-            path += '/'
-        for ex_path in excluded_paths:
-            if ex_path.endswith("*"):
-                ex_l = len(ex_path.split("*")[0])
-                if path[:ex_l] == ex_path:
+        elif path in excluded_paths:
+            return False
+        else:
+            for i in excluded_paths:
+                if i.startswith(path):
                     return False
-            elif ex_path == path:
-                return False
+                if path.startswith(i):
+                    return False
+                if i[-1] == "*":
+                    if path.startswith(i[:-1]):
+                        return False
         return True
+
 
     def authorization_header(self, request=None) -> str:
         """ Check if header has authorization key
