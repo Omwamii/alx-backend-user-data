@@ -7,7 +7,7 @@ from bcrypt import hashpw
 
 
 def hash_password(password: str) -> bytes:
-    """ 
+    """
     Returns a hashed password
     Args:
         password (str): password to be hashed
