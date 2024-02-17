@@ -8,7 +8,7 @@ def filter_datum(fields, redaction, message, separator):
     """ uses regex to replace occurences of strings to obfuscate
     Args:
         fields: list of strings indicating fields to be obfuscated
-        redaction: what field will be obfuscated to 
+        redaction: what field will be obfuscated to
         message: log line to obfuscate
         separator: character separating the fields
     """
