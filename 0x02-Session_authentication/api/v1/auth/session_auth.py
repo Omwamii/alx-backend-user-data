@@ -3,7 +3,7 @@
 from api.v1.auth.auth import Auth
 import uuid
 from models.user import User
-# from flask import request
+from flask import request
 # from typing import TypeVar
 
 
@@ -35,3 +35,15 @@ class SessionAuth(Auth):
         user_id = self.user_id_for_session_id(sesh_id)
         user = User.get(id=user_id)
         return user
+
+    def destroy_session(self, request=None):
+        """ deletes a user session (logout) """
+        if request is None:
+            return False
+        sesh_id = self.session_cookie(request)
+        if sesh_id is None:
+            return False
+        if self.user_id_for_session_id(sesh_id) is None:
+            return False
+        del self.user_id_by_session_id[sesh_id]
+        return True

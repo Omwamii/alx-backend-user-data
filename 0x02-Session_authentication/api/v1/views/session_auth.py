@@ -29,3 +29,14 @@ def handle_auth():
     response = jsonify(user.to_json())
     response.set_cookie(env('SESSION_NAME'), sesh_id)
     return response
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def logout():
+    """ Handle logging out (removing session) """
+    from api.v1.app import auth
+    success = auth.destroy_session(request)
+    if not success:
+        abort(404)
+    return jsonify({}), 200
