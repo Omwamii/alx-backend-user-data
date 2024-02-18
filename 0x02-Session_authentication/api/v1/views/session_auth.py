@@ -15,7 +15,7 @@ def handle_auth():
         return jsonify({'error': "email missing"}), 400
     passwd = request.form.get('password')
     if passwd is None:
-        return jsonify({'error': "password is missing"}), 400
+        return jsonify({'error': "password missing"}), 400
     user = User.search({'email': email})
     if len(user) == 0:
         return jsonify({"error": "no user found for this email"}), 404
