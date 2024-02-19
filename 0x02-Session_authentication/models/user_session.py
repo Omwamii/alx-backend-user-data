@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+""" Module with UserSession class """
 from models.base import Base
 
 
