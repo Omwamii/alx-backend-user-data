@@ -40,4 +40,4 @@ class SessionExpAuth(SessionAuth):
         if sesh_t + timedelta(seconds=self.session_duration) < time.now():
             # session expired
             return None
-        return self.user_id_by_session_id.get(session_id).user_id
+        return self.user_id_by_session_id.get(session_id)['user_id']
