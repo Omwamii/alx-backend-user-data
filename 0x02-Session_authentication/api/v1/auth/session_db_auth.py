@@ -13,6 +13,8 @@ class SessionDBAuth(SessionExpAuth):
             & return session ID
         """
         sesh_id = super().create_session(user_id)
+        if not sesh_id:
+            return None
         user_sesh_obj = UserSession(user_id=user_id, session_id=sesh_id)
         user_sesh_obj.save()
         return sesh_id
