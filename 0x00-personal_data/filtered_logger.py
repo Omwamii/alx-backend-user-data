@@ -12,7 +12,7 @@ PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
-    """ uses regex to replace occurences of strings to obfuscate
+    """ uses regex to replace occurences of spec. strings to obfuscate
     Args:
         fields: list of strings indicating fields to be obfuscated
         redaction: what field will be obfuscated to
