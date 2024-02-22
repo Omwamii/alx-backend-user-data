@@ -49,3 +49,14 @@ class Auth:
         else:
             return bcrypt.checkpw(password.encode('utf-8'),
                                   user.hashed_password)
+
+    def create_session(self, email: str) -> str:
+        """ finds user with email & returns the session ID as string """
+        try:
+            user = self.__db.find_user_by(email=email)
+        except Exception:
+            return None
+        else:
+            sesh_id = _generate_uuid()
+            self.__db.update_user(user.id, session_id=sesh_id)
+            return sesh_id
