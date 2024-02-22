@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Basic Flask App for Auth """
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from auth import Auth
 
 app = Flask(__name__)
@@ -25,6 +25,19 @@ def users():
     else:
         return jsonify({"email": f"{email}", "message": "user created"})
 
+
+@app.route("/sessions", methods=['POST'], strict_slashes=False)
+def login():
+    """ Login """
+    email = str(request.form.get('email'))
+    passw = str(request.form.get('password'))
+    print(f"user: {email}, pass: {passw}")
+    if not AUTH.valid_login(email, passw):
+        abort(401)
+    sesh_id = AUTH.create_session(email)
+    response = jsonify({"email": f"{email}", "message": "logged in"})
+    response.set_cookie(session_id=sesh_id)
+    return response
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port="5000")
