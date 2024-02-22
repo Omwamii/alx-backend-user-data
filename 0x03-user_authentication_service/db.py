@@ -30,12 +30,11 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str):
+    def add_user(self, email: str, hashed_password: str) -> User:
         """ Saves user to the DB & Returns the User object """
-        u_obj = User(email=email, hashed_password=hashed_password)
-        session = self._session
-        session.add(u_obj)
-        obj = session.query(User).filter(User.email == email,
-                                         User.hashed_password ==
-                                         hashed_password).first()
+        user = User(email=email, hashed_password=hashed_password)
+        self._session.add(user)
+        obj = self._session.query(User).filter(User.email == email,
+                                               User.hashed_password ==
+                                               hashed_password).first()
         return obj
