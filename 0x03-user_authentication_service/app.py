@@ -2,6 +2,9 @@
 """ Basic Flask App for Auth """
 from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
+from db import DB
+from sqlalchemy.orm.exc import NoResultFound
+
 
 app = Flask(__name__)
 AUTH = Auth()
@@ -44,8 +47,8 @@ def logout():
     """ Logout """
     sesh_id = request.cookies.get('session_id')
     try:
-        AUTH.destroy_session(sesh_id)
-    except Exception:
+        user = DB.find_user_by(session_id=sesh_id)
+    except NoResultFound:
         abort(403)
     else:
         return redirect("/")
