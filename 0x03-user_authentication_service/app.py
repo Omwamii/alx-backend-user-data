@@ -31,13 +31,13 @@ def login():
     """ Login """
     email = str(request.form.get('email'))
     passw = str(request.form.get('password'))
-    print(f"user: {email}, pass: {passw}")
     if not AUTH.valid_login(email, passw):
         abort(401)
     sesh_id = AUTH.create_session(email)
     response = jsonify({"email": f"{email}", "message": "logged in"})
-    response.set_cookie(session_id=sesh_id)
+    response.set_cookie('session_id', sesh_id)
     return response
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port="5000")

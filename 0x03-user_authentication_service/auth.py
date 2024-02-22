@@ -34,6 +34,7 @@ class Auth:
         except NoResultFound:
             hashed_pw = _hash_password(password)
             new_user = self.__db.add_user(email, hashed_pw)
+            self.__db._session.commit()
             return new_user
         else:
             # user already exists with the provided email
