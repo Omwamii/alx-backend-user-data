@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Basic Flask App for Auth """
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
 app = Flask(__name__)
@@ -37,6 +37,18 @@ def login():
     response = jsonify({"email": f"{email}", "message": "logged in"})
     response.set_cookie('session_id', sesh_id)
     return response
+
+
+@app.route("/sessions", methods=['DELETE'], strict_slashes=False)
+def logout():
+    """ Logout """
+    sesh_id = request.cookies.get('session_id')
+    try:
+        AUTH.destroy_session(sesh_id)
+    except Exception:
+        abort(403)
+    else:
+        return redirect("/")
 
 
 if __name__ == "__main__":
