@@ -82,3 +82,16 @@ class Auth:
         except Exception:
             return None  # user not found
         return None  # user's session deleted in db
+
+    def get_reset_password_token(self, email: str) -> str:
+        """ Find user with email & generate uuid to update reset_token
+            if not found raise ValueError
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+        except Exception:
+            raise ValueError
+        else:
+            reset_tk = _generate_uuid()
+            self._db.update_user(user.id, reset_token=reset_tk)
+            return reset_tk
