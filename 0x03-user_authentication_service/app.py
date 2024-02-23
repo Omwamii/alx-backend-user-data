@@ -18,8 +18,8 @@ def index():
 @app.route("/users", methods=['POST'], strict_slashes=False)
 def users():
     """ endpoint to register users """
-    email = str(request.form.get('email'))
-    passw = str(request.form.get('password'))
+    email = request.form.get('email')
+    passw = request.form.get('password')
     try:
         AUTH.register_user(email, passw)
     except ValueError:
@@ -59,7 +59,7 @@ def profile() -> str:
     user = AUTH.get_user_from_session_id(sesh_id)
     if not user:
         abort(403)
-    return jsonify({"email": "<user email>"})
+    return jsonify({"email": f"{user.email}"}), 200
 
 
 if __name__ == "__main__":

@@ -46,7 +46,7 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(email=email)
-        except Exception:
+        except NoResultFound:
             return False  # user doesn't exist
         else:
             return bcrypt.checkpw(password.encode('utf-8'),
@@ -56,7 +56,7 @@ class Auth:
         """ finds user with email & returns the session ID as string """
         try:
             user = self._db.find_user_by(email=email)
-        except Exception:
+        except NoResultFound:
             return None
         else:
             sesh_id = _generate_uuid()
@@ -69,7 +69,7 @@ class Auth:
             return None
         try:
             user = self._db.find_user_by(session_id=session_id)
-        except Exception:
+        except NoResultFound:
             return None
         else:
             return user
